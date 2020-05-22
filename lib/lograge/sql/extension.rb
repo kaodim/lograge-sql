@@ -45,8 +45,9 @@ else
   Lograge::LogSubscribers::ActionController.prepend Lograge::Sql::Extension
 end
 
-ActiveSupport::LogSubscriber.log_subscribers.each do |subscriber|
-  Lograge.unsubscribe(:active_record, subscriber) if subscriber.is_a?(ActiveRecord::LogSubscriber)
-end
+# Temporarily disable unsubsription so that #{Rails.env}.log will still log AR statements
+# ActiveSupport::LogSubscriber.log_subscribers.each do |subscriber|
+#   Lograge.unsubscribe(:active_record, subscriber) if subscriber.is_a?(ActiveRecord::LogSubscriber)
+# end
 
 Lograge::ActiveRecordLogSubscriber.attach_to :active_record
